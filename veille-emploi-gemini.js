@@ -10,9 +10,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import nodemailer from "nodemailer";
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { config } from "dotenv";
 
-config();
+// Lecture manuelle du .env (local uniquement — GitHub Actions utilise ses propres secrets)
+if (existsSync(".env")) {
+  for (const line of readFileSync(".env", "utf8").split("\n")) {
+    const m = line.match(/^([A-Z_][A-Z0-9_]*)\s*=\s*(.*)$/);
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+  }
+}
 
 // ─────────────────────────────────────────────────────────────
 //  GARDE-FOU
