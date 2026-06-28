@@ -2,8 +2,8 @@ name: Veille Emploi Cyber
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'
-  workflow_dispatch:
+    - cron: '0 7 * * 1-5'  # Lundi-Vendredi 9h Paris (7h UTC)
+  workflow_dispatch:         # Bouton lancement manuel
 
 jobs:
   veille:
@@ -19,17 +19,15 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
-      - name: Créer le fichier .env
-        run: |
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
-          echo "ADZUNA_APP_ID=${{ secrets.ADZUNA_APP_ID }}" >> .env
-          echo "ADZUNA_APP_KEY=${{ secrets.ADZUNA_APP_KEY }}" >> .env
-          echo "EMAIL_TO=${{ secrets.EMAIL_TO }}" >> .env
-          echo "EMAIL_FROM=${{ secrets.EMAIL_FROM }}" >> .env
-          echo "SMTP_HOST=smtp.gmail.com" >> .env
-          echo "SMTP_PORT=465" >> .env
-          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
-          echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> .env
-
       - name: Lancer la veille
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
+          SMTP_HOST:      smtp.gmail.com
+          SMTP_PORT:      "465"
+          SMTP_USER:      ${{ secrets.SMTP_USER }}
+          SMTP_PASS:      ${{ secrets.SMTP_PASS }}
         run: node veille-emploi-gemini.js
