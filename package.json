@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "name": "veille-emploi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node veille-emploi-gemini.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.4.2",
+    "nodemailer": "^9.0.1"
+  }
+}
