@@ -2,7 +2,7 @@ name: Veille Emploi Cyber
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'
+    - cron: '0 7 * * *'  # Tous les jours à 9h
   workflow_dispatch:
 
 jobs:
