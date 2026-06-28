@@ -1,0 +1,33 @@
+name: Veille Emploi Cyber
+
+on:
+  schedule:
+    - cron: '0 7 * * 1-5'  # Lundi-Vendredi à 9h Paris
+  workflow_dispatch:         # Bouton "lancer manuellement"
+
+jobs:
+  veille:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installer les dépendances
+        run: npm install
+
+      - name: Lancer la veille
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
+          SMTP_HOST:      smtp.gmail.com
+          SMTP_PORT:      465
+          SMTP_USER:      ${{ secrets.SMTP_USER }}
+          SMTP_PASS:      ${{ secrets.SMTP_PASS }}
+        run: node veille-emploi-gemini.js
