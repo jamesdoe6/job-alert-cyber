@@ -2,8 +2,8 @@ name: Veille Emploi Cyber
 
 on:
   schedule:
-    - cron: '0 7 * * 1-5'  # Lundi-Vendredi 9h Paris (7h UTC)
-  workflow_dispatch:         # Bouton lancement manuel
+    - cron: '0 7 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   veille:
@@ -18,6 +18,24 @@ jobs:
 
       - name: Installer les dépendances
         run: npm install
+
+      - name: Diagnostic secrets
+        run: |
+          echo "GEMINI_API_KEY  : ${#GEMINI_API_KEY} caractères"
+          echo "ADZUNA_APP_ID   : ${#ADZUNA_APP_ID} caractères"
+          echo "ADZUNA_APP_KEY  : ${#ADZUNA_APP_KEY} caractères"
+          echo "EMAIL_TO        : ${#EMAIL_TO} caractères"
+          echo "EMAIL_FROM      : ${#EMAIL_FROM} caractères"
+          echo "SMTP_USER       : ${#SMTP_USER} caractères"
+          echo "SMTP_PASS       : ${#SMTP_PASS} caractères"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
+          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
+          SMTP_USER:      ${{ secrets.SMTP_USER }}
+          SMTP_PASS:      ${{ secrets.SMTP_PASS }}
 
       - name: Lancer la veille
         env:
