@@ -204,7 +204,7 @@ function deduplicate(offers) {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  SCORING — Gemini 1.5 Flash, IDs positionnels (fiable)
+//  SCORING — Gemini 1.5 Flash (systemInstruction séparé)
 // ─────────────────────────────────────────────────────────────
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
@@ -214,75 +214,66 @@ const scoringModel = genAI.getGenerativeModel({
     temperature: 0.1,
     responseMimeType: "application/json",
   },
+  systemInstruction: `Tu es un recruteur expert cybersécurité. Évalue des offres pour ce candidat :
+Candidat : James Marville, Ingénieur SecOps, 2 ans BNP Paribas Arval, dispo oct 2026
+Stack : Splunk, HarfangLab, CyberArk, Check Point, Fortinet, Active Directory, Python, Bash, Linux, SIEM, EDR, PAM
+Rôles visés : ingénieur cybersécurité, réseaux, systèmes, consultant sécurité, SOC analyst, IAM, GRC
+Zone : Île-de-France ou remote. Français natif, anglais B1.
+BARÈME /100 :
++30 rôle cyber/SOC/réseau/systèmes/consultant
++25 stack technique (Splunk, CyberArk, SIEM, EDR, AD…)
++20 expérience 0-5 ans requise
++15 IDF ou remote
++10 langue française ou anglais B1
+-25 Red Team/offensif/pentest
+-20 AppSec/dev sécurisé
+-15 senior 5+ ans exigés
+-10 anglais C1/C2 obligatoire
+Si expérience non précisée : ne pénalise pas.
+Retourne UNIQUEMENT ce JSON sans texte autour :
+{"scores":[{"score":75,"pros":["point"],"cons":["frein"]}]}`,
 });
-
-const SCORING_SYSTEM = `Tu es un recruteur expert en cybersécurité. Tu vas recevoir une liste d'offres d'emploi numérotées.
-Pour chaque offre, tu dois évaluer sa correspondance avec ce profil candidat :
-
-${PROFILE}
-
-BARÈME sur 100 points :
-+30 pts → Poste : ingénieur cybersécurité, ingénieur réseaux, ingénieur systèmes, consultant cybersécurité, analyste SOC, SecOps
-+25 pts → Stack technique mentionnée : Splunk, HarfangLab, CyberArk, Check Point, Fortinet, AD, SIEM, EDR, PAM, Python, Linux
-+20 pts → Expérience requise : 0 à 5 ans maximum (junior ou confirmé acceptable)
-+15 pts → Localisation Île-de-France ou télétravail accepté
-+10 pts → Poste en français ou anglais B1 suffisant
-
-PÉNALITÉS :
--25 pts → Poste purement offensif / Red Team / pentest
--20 pts → Développement applicatif / AppSec code
--15 pts → Expérience exigée supérieure à 5 ans (senior uniquement)
--10 pts → Anglais C1/C2 ou bilingue obligatoire
-
-IMPORTANT : si l'expérience requise n'est pas mentionnée, suppose que c'est un poste accessible et ne pénalise pas.
-Retourne un score pour CHAQUE offre dans le même ordre que tu les reçois.
-
-Format JSON strict (un objet par offre, dans l'ordre) :
-{"scores":[{"score":78,"pros":["Ingénieur cybersécurité exact","Stack Splunk mentionnée"],"cons":["Anglais B2 requis"]},{"score":55,"pros":["IDF","CDI"],"cons":["5+ ans exigés"]}]}`;
 
 async function scoreOffers(offers) {
   const batches = [];
-  for (let i = 0; i < offers.length; i += 4) batches.push(offers.slice(i, i + 4));
+  for (let i = 0; i < offers.length; i += 3) batches.push(offers.slice(i, i + 3));
 
   for (const [idx, batch] of batches.entries()) {
-    // IDs positionnels simples → pas de risque de mismatch
     const items = batch.map((o, i) =>
-      `OFFRE ${i + 1} :\nPoste : ${o.title}\nEntreprise : ${o.company}\nLieu : ${o.location}\nDescription : ${o.snippet || "Non fournie"}`
-    ).join("\n\n---\n\n");
-
-    const prompt = `${SCORING_SYSTEM}\n\nVoici les ${batch.length} offres à évaluer :\n\n${items}\n\nRetourne exactement ${batch.length} scores dans l'ordre.`;
+      `OFFRE ${i + 1}: ${o.title} | ${o.company} | ${o.location} | ${(o.snippet || "").slice(0, 150)}`
+    ).join("\n");
 
     try {
-      const result = await scoringModel.generateContent(prompt);
-      const raw = result.response.text();
-      console.log(`  📊  Lot ${idx + 1} — réponse Gemini : ${raw.slice(0, 120)}...`);
+      const result = await scoringModel.generateContent(
+        `Evalue ces ${batch.length} offres et retourne ${batch.length} scores dans l\'ordre :\n\n${items}`
+      );
+      const raw = result.response.text().trim();
+      console.log(`  📊  Lot ${idx + 1} : ${raw.slice(0, 120)}`);
 
       let parsed;
-      try   { parsed = JSON.parse(raw); }
-      catch {
-        const m = raw.match(/\{[\s\S]*"scores"[\s\S]*\}/);
+      try { parsed = JSON.parse(raw); } catch {
+        const m = raw.match(/\{[\s\S]*\}/);
         if (m) try { parsed = JSON.parse(m[0]); } catch {}
       }
 
-      if (parsed?.scores && Array.isArray(parsed.scores)) {
+      if (parsed?.scores?.length) {
         parsed.scores.forEach((s, i) => {
-          if (batch[i]) {
-            batch[i].score = Math.min(100, Math.max(0, Number(s.score) || 0));
-            batch[i].pros  = Array.isArray(s.pros) ? s.pros.slice(0, 3) : [];
-            batch[i].cons  = Array.isArray(s.cons) ? s.cons.slice(0, 2) : [];
-          }
+          if (!batch[i]) return;
+          batch[i].score = Math.min(100, Math.max(0, Number(s.score) || 0));
+          batch[i].pros  = Array.isArray(s.pros) ? s.pros.slice(0, 3) : [];
+          batch[i].cons  = Array.isArray(s.cons) ? s.cons.slice(0, 2) : [];
         });
-        console.log(`     → Scores : ${parsed.scores.map((s) => s.score).join(", ")}`);
+        console.log(`     → Scores : ${parsed.scores.map((s) => s.score).join(" / ")}`);
       } else {
-        console.warn(`  ⚠️  Lot ${idx + 1} : JSON inattendu, scores à 50 par défaut`);
-        batch.forEach((o) => { o.score = 50; o.pros = ["À vérifier manuellement"]; o.cons = []; });
+        console.warn(`  ⚠️  Lot ${idx + 1} parsing échoué. Réponse brute : ${raw.slice(0, 200)}`);
+        batch.forEach((o) => { o.score = 0; o.pros = []; o.cons = ["Scoring indisponible"]; });
       }
     } catch (err) {
-      console.warn(`  ⚠️  Scoring lot ${idx + 1} : ${err.message}`);
-      batch.forEach((o) => { o.score = 50; });
+      console.warn(`  ⚠️  Lot ${idx + 1} erreur : ${err.message}`);
+      batch.forEach((o) => { o.score = 0; });
     }
 
-    if (idx < batches.length - 1) await sleep(5_000); // free tier : 15 req/min
+    if (idx < batches.length - 1) await sleep(5_000);
   }
 
   return offers.sort((a, b) => b.score - a.score);
