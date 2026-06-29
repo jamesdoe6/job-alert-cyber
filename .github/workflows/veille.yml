@@ -2,8 +2,11 @@ name: Veille Emploi Cyber
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # Tous les jours à 9h
+    - cron: '0 9 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   veille:
@@ -19,24 +22,6 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
-      - name: Diagnostic secrets
-        run: |
-          echo "GEMINI_API_KEY  : ${#GEMINI_API_KEY} caractères"
-          echo "ADZUNA_APP_ID   : ${#ADZUNA_APP_ID} caractères"
-          echo "ADZUNA_APP_KEY  : ${#ADZUNA_APP_KEY} caractères"
-          echo "EMAIL_TO        : ${#EMAIL_TO} caractères"
-          echo "EMAIL_FROM      : ${#EMAIL_FROM} caractères"
-          echo "SMTP_USER       : ${#SMTP_USER} caractères"
-          echo "SMTP_PASS       : ${#SMTP_PASS} caractères"
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
-          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
-          EMAIL_TO:       ${{ secrets.EMAIL_TO }}
-          EMAIL_FROM:     ${{ secrets.EMAIL_FROM }}
-          SMTP_USER:      ${{ secrets.SMTP_USER }}
-          SMTP_PASS:      ${{ secrets.SMTP_PASS }}
-
       - name: Lancer la veille
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -49,3 +34,11 @@ jobs:
           SMTP_USER:      ${{ secrets.SMTP_USER }}
           SMTP_PASS:      ${{ secrets.SMTP_PASS }}
         run: node veille-emploi-gemini.js
+
+      - name: Sauvegarder les offres vues
+        run: |
+          git config user.name "Veille Bot"
+          git config user.email "bot@veille.local"
+          git add veille-seen-ids.json
+          git diff --cached --quiet || git commit -m "seen: $(date +%Y-%m-%d)"
+          git push
