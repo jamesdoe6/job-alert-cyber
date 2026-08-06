@@ -209,7 +209,7 @@ function deduplicate(offers) {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const scoringModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash-latest",
+  model: "gemini-3.5-flash-lite",
   generationConfig: {
     temperature: 0.1,
     responseMimeType: "application/json",
@@ -252,18 +252,19 @@ async function scoreOffers(offers) {
 
       let parsed;
       try { parsed = JSON.parse(raw); } catch {
-        const m = raw.match(/\{[\s\S]*\}/);
+        const m = raw.match(/\{[\s\S]*\}/) || raw.match(/\[[\s\S]*\]/);
         if (m) try { parsed = JSON.parse(m[0]); } catch {}
       }
-
-      if (parsed?.scores?.length) {
-        parsed.scores.forEach((s, i) => {
+      // Accepte les deux formats : {"scores":[...]} ET [...] nu
+      const scoresArray = Array.isArray(parsed) ? parsed : parsed?.scores;
+      if (scoresArray?.length) {
+        scoresArray.forEach((s, i) => {
           if (!batch[i]) return;
           batch[i].score = Math.min(100, Math.max(0, Number(s.score) || 0));
           batch[i].pros  = Array.isArray(s.pros) ? s.pros.slice(0, 3) : [];
           batch[i].cons  = Array.isArray(s.cons) ? s.cons.slice(0, 2) : [];
         });
-        console.log(`     → Scores : ${parsed.scores.map((s) => s.score).join(" / ")}`);
+        console.log(`     → Scores : ${scoresArray.map((s) => s.score).join(" / ")}`);
       } else {
         console.warn(`  ⚠️  Lot ${idx + 1} parsing échoué. Réponse brute : ${raw.slice(0, 200)}`);
         batch.forEach((o) => { o.score = 0; o.pros = []; o.cons = ["Scoring indisponible"]; });
@@ -467,12 +468,24 @@ async function main() {
     good:   scored.filter((o) => o.score >= 65 && o.score < 75).length,
     others: scored.filter((o) => o.score < 65).length,
   };
-  console.log(`\n  → FORT:${stats.strong}  BON:${stats.good}  AUTRES:${stats.others}\n`);
+console.log(`\n  → FORT:${stats.strong}  BON:${stats.good}  AUTRES:${stats.others}\n`);
 
-  // 3. Mémoriser + envoyer
+  // 3. Mémoriser TOUTES les offres scorées (même sous le seuil, pour ne pas les rescorer demain)
   saveSeenIds([...Array.from(seenIds).map((id) => ({ id })), ...scored]);
+
+  // 4. Filtrer avant envoi : seulement les offres au-dessus du seuil
+  const SCORE_THRESHOLD = 40;
+  const toSend = scored.filter((o) => o.score >= SCORE_THRESHOLD);
+  console.log(`  → ${toSend.length}/${scored.length} offre(s) au-dessus du seuil ${SCORE_THRESHOLD} (envoyée(s))\n`);
+
+  if (toSend.length === 0) {
+    console.log("ℹ️   Aucune offre au-dessus du seuil. Email non envoyé.");
+    console.log(`\n✅  Terminé en ${((Date.now() - t0) / 1000).toFixed(1)}s\n`);
+    return;
+  }
+
   console.log("📧  Envoi email...");
-  const html = buildEmailHTML(scored, stats);
+  const html = buildEmailHTML(toSend, stats);
   await sendEmail(html, stats);
 
   console.log(`\n✅  Terminé en ${((Date.now() - t0) / 1000).toFixed(1)}s\n`);
