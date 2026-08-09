@@ -22,6 +22,11 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
+      - name: Écrire la clé de compte de service Google
+        run: |
+          mkdir -p secrets
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > secrets/service-account.json
+
       - name: Lancer la veille
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -33,6 +38,9 @@ jobs:
           SMTP_PORT:      "465"
           SMTP_USER:      ${{ secrets.SMTP_USER }}
           SMTP_PASS:      ${{ secrets.SMTP_PASS }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ./secrets/service-account.json
+          TRACKER_SHEET_ID: ${{ secrets.TRACKER_SHEET_ID }}
+          SUGGESTIONS_SHEET_TAB: ${{ secrets.SUGGESTIONS_SHEET_TAB }}
         run: node veille-emploi-gemini.js
 
       - name: Sauvegarder les offres vues
