@@ -8,6 +8,7 @@
  */
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { google } from "googleapis";
 import nodemailer from "nodemailer";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 
@@ -487,6 +488,85 @@ console.log(`\n  → FORT:${stats.strong}  BON:${stats.good}  AUTRES:${stats.oth
   console.log("📧  Envoi email...");
   const html = buildEmailHTML(toSend, stats);
   await sendEmail(html, stats);
+  await pushToTracker(toSend);
+
+async function pushToTracker(offers) {
+  const { GOOGLE_SERVICE_ACCOUNT_KEY, TRACKER_SHEET_ID, SUGGESTIONS_SHEET_TAB } = process.env;
+  if (!GOOGLE_SERVICE_ACCOUNT_KEY || !TRACKER_SHEET_ID) {
+    console.warn("⚠️  Tracker Sheet non configuré, étape ignorée.");
+    return;
+  }
+  const auth = new google.auth.GoogleAuth({
+    keyFile: GOOGLE_SERVICE_ACCOUNT_KEY,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  });
+  const sheets = google.sheets({ version: "v4", auth });
+
+  // Lit TOUTES les lignes existantes (pas juste A:C) pour repérer les trous ET la dédup
+  const existing = await sheets.spreadsheets.values.get({
+    spreadsheetId: TRACKER_SHEET_ID,
+    range: `${SUGGESTIONS_SHEET_TAB}!A2:G`,
+  });
+  const existingRows = existing.data.values || [];
+
+  const seen = new Set(
+    existingRows.map((r) => `${(r[0] || "").trim()}|${(r[2] || "").trim()}`)
+  );
+
+  const newRows = offers
+    .filter((o) => !seen.has(`${o.company}|${o.title}`))
+    .map((o) => [
+      o.company,
+      o.score,
+      o.title,
+      new Date().toISOString().slice(0, 10),
+      "à trier",
+      "",
+      o.url || "",
+    ]);
+
+  if (newRows.length === 0) {
+    console.log("📋  Tracker : aucune nouvelle offre à ajouter (déjà présentes).");
+    return;
+  }
+
+  // Repère les indices de lignes complètement vides au milieu du tableau
+  // (colonne A vide = ligne considérée comme un "trou" à combler)
+  const emptyRowIndexes = [];
+  existingRows.forEach((row, i) => {
+    const isEmpty = !row || row.every((cell) => !cell || cell.trim() === "");
+    if (isEmpty) emptyRowIndexes.push(i); // index 0 = ligne 2 du Sheet (A2)
+  });
+
+  let filled = 0;
+  const remaining = [...newRows];
+
+  // 1. Comble les trous existants via update ciblé, un par un
+  for (const idx of emptyRowIndexes) {
+    if (remaining.length === 0) break;
+    const rowNumber = idx + 2; // +2 car A2 = index 0, et on est en base 1 pour le Sheet
+    const row = remaining.shift();
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: TRACKER_SHEET_ID,
+      range: `${SUGGESTIONS_SHEET_TAB}!A${rowNumber}:G${rowNumber}`,
+      valueInputOption: "USER_ENTERED",
+      requestBody: { values: [row] },
+    });
+    filled++;
+  }
+
+  // 2. Ce qui ne rentre pas dans les trous est ajouté normalement à la fin
+  if (remaining.length > 0) {
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: TRACKER_SHEET_ID,
+      range: `${SUGGESTIONS_SHEET_TAB}!A:G`,
+      valueInputOption: "USER_ENTERED",
+      requestBody: { values: remaining },
+    });
+  }
+
+  console.log(`📋  Tracker : ${filled} ligne(s) vide(s) comblée(s), ${remaining.length} ajoutée(s) en fin de tableau (total ${newRows.length}).`);
+}
 
   console.log(`\n✅  Terminé en ${((Date.now() - t0) / 1000).toFixed(1)}s\n`);
 }
