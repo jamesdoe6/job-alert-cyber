@@ -10,6 +10,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "dotenv": "^17.4.2",
+    "googleapis": "^174.0.1",
     "nodemailer": "^9.0.1"
   }
 }
