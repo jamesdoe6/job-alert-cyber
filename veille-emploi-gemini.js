@@ -521,7 +521,7 @@ async function pushToTracker(offers) {
       o.title,
       new Date().toISOString().slice(0, 10),
       "à trier",
-      "",
+      o.location || "",
       o.url || "",
     ]);
 

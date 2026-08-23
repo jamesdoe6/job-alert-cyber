@@ -1,0 +1,69 @@
+name: Veille Internationale
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  adzuna-intl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Write Google service account key
+        run: |
+          mkdir -p secrets
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > secrets/service-account.json
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ./secrets/service-account.json
+          TRACKER_SHEET_ID: ${{ secrets.TRACKER_SHEET_ID }}
+          SUGGESTIONS_INTL_TAB: Suggestions-Intl
+        run: node graduate-intl-watch.js
+
+  japan-jobs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npx puppeteer browsers install chrome
+      - name: Write Google service account key
+        run: |
+          mkdir -p secrets
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > secrets/service-account.json
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ./secrets/service-account.json
+          TRACKER_SHEET_ID: ${{ secrets.TRACKER_SHEET_ID }}
+          SUGGESTIONS_INTL_TAB: Suggestions-Intl
+        run: node japan-jobs-watch.js
+
+  graduate-programmes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Write Google service account key
+        run: |
+          mkdir -p secrets
+          echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > secrets/service-account.json
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ./secrets/service-account.json
+          TRACKER_SHEET_ID: ${{ secrets.TRACKER_SHEET_ID }}
+          GRAD_SHEET_TAB: Graduate-Programmes
+        run: node graduate-programmes-watch.js

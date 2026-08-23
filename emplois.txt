@@ -1,0 +1,1073 @@
+Onglet ciblé : Suggestions-Intl
+Contenu : [
+  [
+    "entreprise",
+    "score",
+    "poste",
+    "date_envoi",
+    "statut",
+    "prochaine_action",
+    "lien_offre"
+  ],
+  [
+    "Pernod Ricard SA",
+    "50",
+    "Cybersecurity Officer H/F",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5717575823?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Approach People Recruitment",
+    "65",
+    "Cybersecurity Analyst - H/F",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5831384417?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "NL3M Philips International BV",
+    "65",
+    "Cybersecurity Champion H/F",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5759533045?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "EKXEL IT Services & Financial Engineering",
+    "70",
+    "IT Security Expert pour une Institution Européenne à Strasbourg",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5727103353?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Fortinet",
+    "60",
+    "Technical Support Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5753504462?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "GovTech Singapore",
+    "65",
+    "Cybersecurity Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5849361217?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Hudson Singapore",
+    "60",
+    "Cybersecurity Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5845967154?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sourceability",
+    "55",
+    "Cybersecurity Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5768951651?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Private Advertiser",
+    "65",
+    "Cybersecurity Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5842662195?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Screening Eagle Technologies SA",
+    "60",
+    "Cybersecurity Officer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5734527918?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Thales",
+    "50",
+    "IT Security Engineer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5724647158?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "DCI CONSULTANTS PRIVATE LIMITED",
+    "60",
+    "IT Security Officer - JN",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5816226411?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "FPT Asia Pacific Pte Ltd",
+    "50",
+    "G01 - IT Security Officer",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5831632060?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Xcellink Pte Ltd",
+    "70",
+    "SOC Analyst L1 (Cybersecurity) (i2i Traineeship Program)",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5636065608?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Binance",
+    "60",
+    "Remote SOC Engineer (Automation & IR)",
+    "23/08/2026",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5814964037?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [
+    "Transdev",
+    "65",
+    "Cybersecurity",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5816831516?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Pernod Ricard",
+    "75",
+    "Cybersecurity Officer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5765958100?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Scaleway",
+    "65",
+    "DevOps Cybersecurity Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5791398240?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "HCLTech",
+    "85",
+    "IAM & Cybersecurity – SailPoint / PAM",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5830337705?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "AKKODIS INGENIERIE PRODUIT SAS",
+    "60",
+    "CYBERSECURITY ENGINEER F/H",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5821016587?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Mistral",
+    "65",
+    "CyberSecurity, Platform Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5833597841?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Regional Brain IS",
+    "70",
+    "Sites Cybersecurity Officer - Prague, Rakovnik",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5786233617?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Scaleway",
+    "50",
+    "DevOps Cybersecurity Engineer H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5837497652?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Dioxycle",
+    "65",
+    "IT & Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5723413868?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Spektrum",
+    "75",
+    "IT Security Specialist",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/4801569551?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "London Stock Exchange Group",
+    "85",
+    "IT Security Officer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5732562629?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Capijobnew",
+    "80",
+    "IT Security Vulnerability Management (Operations)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5761603140?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Dioxycle",
+    "60",
+    "IT & Security Engineer H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5819614121?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Veepee",
+    "65",
+    "DevSecOps - IT Security Engineer - CDI - H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/4617027675?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "HCLTech",
+    "75",
+    "IT Operational Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5843038884?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "European Dynamics",
+    "80",
+    "Security Officer H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5837497275?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Murex",
+    "85",
+    "SOC Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5794767974?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Integrity360",
+    "90",
+    "L2 SOC Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5843163557?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Steef",
+    "88",
+    "SOC ANALYSTE 3ans Expérience",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5833356624?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Murex",
+    "85",
+    "Soc Analyst H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5793886802?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sopra Steria",
+    "80",
+    "Analyste SOC Detection - Cybersécurité - Ile-de-France",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/land/ad/5712970955?se=vqIcZCKf8RGkw7aNMMxh3Q&utm_medium=api&utm_source=c8cd440f&v=8624E9AFB94E5D5A3E45D0543FCACB6071EA740A"
+  ],
+  [
+    "SQUAD",
+    "90",
+    "Analyste SOC",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5776219828?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Cyclad France",
+    "85",
+    "Analyste SOC",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5727095681?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Trèfle Solution",
+    "95",
+    "Analyste SOC - CSIRT",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5828698684?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Néosoft",
+    "75",
+    "Analyste SOC N2",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5823824239?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Ministère des Armées",
+    "90",
+    "Analyste Soc Debutant",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5815777651?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Act Digital France",
+    "70",
+    "Analyste SOC N3",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5830316459?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Atos",
+    "85",
+    "Analyste SOC (F/H)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5823902600?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "SGDSN",
+    "90",
+    "Analyste Soc H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5806463476?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "DAVIDSON LYON",
+    "90",
+    "Analyste SOC F/H",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5815269429?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Cheops Technology",
+    "85",
+    "Analyste SOC (H/F)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5794733344?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Non précisé",
+    "85",
+    "Analyste SOC H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5835652248?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Atos",
+    "80",
+    "Analyste SOC F/H",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5827681717?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Néo-Soft",
+    "75",
+    "Analyste SOC N3 Paris",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5335912375?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Devoteam",
+    "85",
+    "Analyste Soc H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5815146615?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Free-Work",
+    "80",
+    "analyste SOC niveau 2 (IT)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5813293140?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Informatis",
+    "75",
+    "Analyste Soc N2 H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5851744305?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Astek",
+    "80",
+    "Ingénieur analyste SOC H/F",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5776220405?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Capijobnew",
+    "75",
+    "Analyste SOC N2 F/H",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.fr/details/5761602811?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Die Securitas Gruppe",
+    "80",
+    "Cybersecurity Operations Engineer 80 - 100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5747465380?se=RPPVZSKf8RGuhb29SBmEeQ&utm_medium=api&utm_source=c8cd440f&v=3677F6754660AB94B05134E73C8CBCAB3A84F00D"
+  ],
+  [
+    "ONAX AG it solutions",
+    "75",
+    "Junior Cybersecurity und Netzwerk Engineer 80-100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5851019612?se=RPPVZSKf8RGuhb29SBmEeQ&utm_medium=api&utm_source=c8cd440f&v=E8E6A092AA23827EACB3BB597211EBA26E740FC5"
+  ],
+  [
+    "upConsult",
+    "65",
+    "Cybersecurity Threat Analyst/in",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5744684142?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Eraneos",
+    "60",
+    "Cybersecurity Consultant / Manager 80-100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/4956776888?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Ontinue AG",
+    "85",
+    "Associate Technical Account Manager - Cybersecurity",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5814601747?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "ONAX AG - it solutions",
+    "60",
+    "Junior Cybersecurity und Netzwerk Engineer 80-100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5747722832?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Job-Room",
+    "65",
+    "Service Engineer IT/OT & Cybersecurity Services 100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5848099304?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Bison Schweiz AG",
+    "65",
+    "Security Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5849392602?se=RPPVZSKf8RGuhb29SBmEeQ&utm_medium=api&utm_source=c8cd440f&v=29402B53DFC0B44A3620BA785A697217D52C970C"
+  ],
+  [
+    "Swiss Post",
+    "95",
+    "Junior Security Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5851467225?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "SYNTEGON",
+    "50",
+    "Compliance Specialist Cyber Security (m/w/d)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5840652370?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Bechtle Suisse SA",
+    "70",
+    "Security Engineer (m/f/d)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5851402772?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Fortinet",
+    "65",
+    "Channel Systems Engineer - Switzerland",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5853038990?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Art Computer SA",
+    "85",
+    "Information Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5852763471?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Kantonspolizei Zürich",
+    "90",
+    "Informatik Spezialist/-in Security Operation Center",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5847068936?se=NrxbZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=50EF0F4D6F21DCE18D23F5278FEA931B7DAF8275"
+  ],
+  [
+    "Kantonspolizei Zürich",
+    "80",
+    "Informatik Spezialist/-in Detection Engineering und Automation",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5847068854?se=NrxbZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=133EEF323D8A7CEE96552C2FB7A410E4BC1497C4"
+  ],
+  [
+    "Consult & Pepper AG",
+    "70",
+    "IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5851365972?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=BBB552D666AF60595FF27B101E211C9173822536"
+  ],
+  [
+    "LGT Capital Partners AG",
+    "75",
+    "IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841663846?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Ypsomed AG",
+    "70",
+    "IT Security Infrastructure Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5840558683?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=B6E4452D4106CE6224858E6DCDCE158DF6060AF3"
+  ],
+  [
+    "BOLL Engineering AG",
+    "75",
+    "System Engineer IT Security",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5817390095?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=32D8509C61F29725D57D305C9EBF93EEFE88E75E"
+  ],
+  [
+    "AO Foundation",
+    "55",
+    "Senior IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841640926?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "cellio - vermittelt kaufmännische Spezialisten",
+    "65",
+    "IT Security/Cyber Specialist 100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5840535822?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=6C146998BDF93B34771332E865B5159F8C06C6B9"
+  ],
+  [
+    "Syntegon Packaging Systems AG",
+    "60",
+    "IT Security Spezialist - HMI/SCADA-Plattform",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841636629?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sonio AG",
+    "65",
+    "IT Security Consultant – Cyber Security, Business Continuity & Cyber Resilience",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5831963783?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=937DD51683377602C924FB3A9B3FD99190175CA8"
+  ],
+  [
+    "LGT",
+    "80",
+    "IT Security Engineer - Security Platforms & AI Automation 80-100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/land/ad/5840296106?se=3H_iZiKf8RGfQpohglHoaw&utm_medium=api&utm_source=c8cd440f&v=88087A594515480D2835AC857A6817CD04701767"
+  ],
+  [
+    "Destinus",
+    "80",
+    "IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5553777008?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Bank CIC  AG",
+    "75",
+    "IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841675284?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Cicorel S.A.",
+    "70",
+    "IT Security Associate",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841646640?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Job-Room",
+    "50",
+    "IT Security Associate",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5843067216?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "LGT Capital Partners",
+    "75",
+    "IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5822996745?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Manpower",
+    "65",
+    "IT Security Infrastructure Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5821001596?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Bank CIC  AG",
+    "70",
+    "IT Security Engineer (100 %)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841656724?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Ville de Pully",
+    "65",
+    "100% IT Security Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5846662266?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "BOLL Engineering AG",
+    "60",
+    "System Engineer IT Security (100%)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5841653368?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Rothschild & Co",
+    "60",
+    "(Junior) IT Security Officer (80% - 100%)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5848972466?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sonio AG",
+    "65",
+    "IT Security Consultant (m/w/d)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5829686492?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "cyberunity AG",
+    "70",
+    "IT Security System Engineer (a) 80-100%",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5633146137?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Experis",
+    "85",
+    "Cyber Security Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5809347959?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Job-Room",
+    "85",
+    "Cyber Security Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.ch/details/5850946646?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "PACIFICLIGHT POWER PTE. LTD.",
+    "80",
+    "Engineer, Cybersecurity",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5819590890?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "MICHAEL PAGE  PTE. LTD.",
+    "70",
+    "Cybersecurity Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5834408436?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Jane Street",
+    "60",
+    "Cybersecurity Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5707649173?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Centre for Strategic Infocomm Technologies",
+    "85",
+    "Cybersecurity Associate",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5775458528?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "WENETWORK PTE. LTD.",
+    "60",
+    "Cybersecurity Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5816226113?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Non précisé",
+    "50",
+    "Cybersecurity engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5846581085?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Thales",
+    "50",
+    "Cybersecurity System Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5584944495?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Applied Materials",
+    "65",
+    "Manufacturing Cybersecurity Engineer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5842029876?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Singapore Polytechnic",
+    "55",
+    "Senior/ Engineer, Cybersecurity",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5821418652?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "TESCOM  SOFTWARE SYSTEMS TESTING PTE LTD.",
+    "60",
+    "IT Security Officer",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5813373189?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Maritime and Port Authority of Singapore",
+    "65",
+    "IT Security Officer - IT Governance & Security [ITE Headquarters]",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5819973918?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Tech Aalto",
+    "70",
+    "IT Security Officer (ITSO)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5623324753?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "AquaCorp",
+    "85",
+    "IT Security Operations Specialist",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/4881954362?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Thales",
+    "80",
+    "IT Security Engineer I",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5822523718?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Assurity Trusted Solutions",
+    "65",
+    "Cybersecurity Engineer (IT Security Operations) - Multiple Headcounts",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5753072399?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Nanyang Technological University",
+    "65",
+    "IT Security Specialist (Information Security Department) [NIE]",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5776910533?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "TESCOM  SOFTWARE SYSTEMS TESTING PTE LTD.",
+    "60",
+    "IT Security Officer: Governance, Risk & Incident Response",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5813383978?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Flintex Consulting Pte Ltd",
+    "75",
+    "SOC Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5845325327?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Non précisé",
+    "75",
+    "Security SOC Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5846587697?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Royal Ocean Marine",
+    "80",
+    "Cybersecurity SOC Analyst (0016 Mar 2026)",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5652341805?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sygnia",
+    "65",
+    "Security Operations Center Analyst",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5811519349?utm_medium=api&utm_source=c8cd440f"
+  ],
+  [
+    "Sephora",
+    "50",
+    "Security Operations Expert",
+    "2026-08-23",
+    "à trier",
+    "",
+    "https://www.adzuna.sg/details/5735979901?utm_medium=api&utm_source=c8cd440f"
+  ]
+]
