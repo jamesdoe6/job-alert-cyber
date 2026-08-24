@@ -54,8 +54,8 @@ async function fetchAdzuna(country, keyword) {
 
 async function scoreAndFilter(offers) {
   const results = [];
-  for (let i = 0; i < offers.length; i += 3) {
-    const batch = offers.slice(i, i + 3);
+  for (let i = 0; i < offers.length; i += 10) {
+    const batch = offers.slice(i, i + 10);
     const items = batch.map((o, idx) =>
       `OFFRE ${idx + 1} [${o.country.toUpperCase()}]: ${o.title} | ${o.company} | ${o.location} | ${o.snippet.slice(0, 200)}`
     ).join("\n");
@@ -174,6 +174,19 @@ async function main() {
   console.log(`  → ${relevant.length}/${scored.length} pertinentes\n`);
 
   await pushToSheet(relevant, SUGGESTIONS_INTL_TAB);
+  await notifyTelegram(`✅ Veille Intl (FR/CH/SG) terminée : ${relevant.length} offres pertinentes trouvées.`);
+}
+
+async function notifyTelegram(message) {
+  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message }),
+    });
+  } catch (e) { console.warn("⚠️  Telegram notif échouée :", e.message); }
 }
 
 main().catch((err) => { console.error("❌  Erreur fatale :", err.message); process.exit(1); });

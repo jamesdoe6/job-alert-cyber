@@ -237,7 +237,7 @@ Retourne UNIQUEMENT ce JSON sans texte autour :
 
 async function scoreOffers(offers) {
   const batches = [];
-  for (let i = 0; i < offers.length; i += 3) batches.push(offers.slice(i, i + 3));
+  for (let i = 0; i < offers.length; i += 10) batches.push(offers.slice(i, i + 10));
 
   for (const [idx, batch] of batches.entries()) {
     const items = batch.map((o, i) =>

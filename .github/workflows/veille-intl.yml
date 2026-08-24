@@ -66,4 +66,6 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_KEY: ./secrets/service-account.json
           TRACKER_SHEET_ID: ${{ secrets.TRACKER_SHEET_ID }}
           GRAD_SHEET_TAB: Graduate-Programmes
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node graduate-programmes-watch.js

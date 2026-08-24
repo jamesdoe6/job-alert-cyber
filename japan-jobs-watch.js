@@ -68,8 +68,8 @@ async function fetchTokyoDev() {
 
 async function scoreAndFilter(offers) {
   const results = [];
-  for (let i = 0; i < offers.length; i += 3) {
-    const batch = offers.slice(i, i + 3);
+  for (let i = 0; i < offers.length; i += 10) {
+    const batch = offers.slice(i, i + 10);
     const items = batch.map((o, idx) => "OFFRE " + (idx + 1) + ": " + o.title + " | Tags: " + o.tags).join("\n");
     const prompt = "Profil :\n" + PROFILE + "\n\n" +
       "Evalue ces offres au Japon. Rejette DevOps, Data/Data Analytics, vente/pre-vente, support client local, conformite japonaise pure.\n" +
@@ -155,6 +155,19 @@ async function main() {
   const scored = await scoreAndFilter(offers);
   const relevant = scored.filter((o) => o.score >= 50);
   await pushToSheet(relevant);
+  await notifyTelegram(`✅ Veille Japon (TokyoDev) terminée : ${relevant.length} offres pertinentes trouvées.`);
+}
+
+async function notifyTelegram(message) {
+  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message }),
+    });
+  } catch (e) { console.warn("⚠️  Telegram notif échouée :", e.message); }
 }
 
 main().catch((err) => { console.error("❌", err.message); process.exit(1); });

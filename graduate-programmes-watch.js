@@ -56,8 +56,8 @@ async function fetchAdzunaGraduate(country) {
 
 async function scoreAndFilter(offers) {
   const results = [];
-  for (let i = 0; i < offers.length; i += 3) {
-    const batch = offers.slice(i, i + 3);
+  for (let i = 0; i < offers.length; i += 10) {
+    const batch = offers.slice(i, i + 10);
     const items = batch.map((o, idx) =>
       `OFFRE ${idx + 1} [${o.country.toUpperCase()}]: ${o.title} | ${o.company} | ${o.location} | ${o.snippet.slice(0, 200)}`
     ).join("\n");
@@ -152,6 +152,19 @@ async function main() {
   console.log(`  → ${scored.length} programmes IT/cyber pertinents\n`);
 
   await pushToSheet(scored);
+  await notifyTelegram(`✅ Veille Graduate Programmes (GB/FR/SG) terminée : ${scored.length} programmes trouvés.`);
+}
+
+async function notifyTelegram(message) {
+  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message }),
+    });
+  } catch (e) { console.warn("⚠️  Telegram notif échouée :", e.message); }
 }
 
 main().catch((err) => { console.error("❌", err.message); process.exit(1); });
