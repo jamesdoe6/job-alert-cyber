@@ -87,6 +87,11 @@ async function scoreAndFilter(offers) {
   }
   return results;
 }
+function extractOfferId(url) {
+  const m = url.match(/\/(?:details|land\/ad)\/(\d+)/);
+  return m ? m[1] : url;
+}
+
 
 async function pushToSheet(offers, tab) {
   if (!GOOGLE_SERVICE_ACCOUNT_KEY || !TRACKER_SHEET_ID) return;
@@ -101,11 +106,11 @@ async function pushToSheet(offers, tab) {
   const existingRows = existing.data.values || [];
 
   const seen = new Set(
-    existingRows.map((r) => `${(r[0] || "").trim()}|${(r[2] || "").trim()}`)
+    existingRows.map((r) => extractOfferId((r[6] || "").trim()))
   );
 
   const newRows = offers
-    .filter((o) => !seen.has(`${o.company}|${o.title}`))
+    .filter((o) => !seen.has(extractOfferId(o.url)))
     .map((o) => [o.company, o.score, o.title, new Date().toISOString().slice(0, 10), "à trier", `${o.location} (${o.country.toUpperCase()})`, o.url]);  if (newRows.length === 0) {
     console.log(`📋  ${tab} : rien de nouveau.`);
     return;

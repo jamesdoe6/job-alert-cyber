@@ -84,6 +84,11 @@ async function scoreAndFilter(offers) {
   }
   return results;
 }
+function extractOfferId(url) {
+  const m = url.match(/\/(?:details|land\/ad)\/(\d+)/);
+  return m ? m[1] : url;
+}
+
 
 async function pushToSheet(offers) {
   if (!GOOGLE_SERVICE_ACCOUNT_KEY || !TRACKER_SHEET_ID || offers.length === 0) {
@@ -95,10 +100,10 @@ async function pushToSheet(offers) {
 
   const existing = await sheets.spreadsheets.values.get({ spreadsheetId: TRACKER_SHEET_ID, range: `${GRAD_SHEET_TAB}!A2:G500` });
   const existingRows = existing.data.values || [];
-  const seen = new Set(existingRows.map((r) => `${(r[0] || "").trim()}|${(r[2] || "").trim()}`));
+  const seen = new Set(existingRows.map((r) => extractOfferId((r[6] || "").trim())));
 
   const newRows = offers
-    .filter((o) => !seen.has(`${o.company}|${o.title}`))
+    .filter((o) => !seen.has(extractOfferId(o.url)))
     .map((o) => [o.company, o.score, o.title, new Date().toISOString().slice(0, 10), "à trier", o.location, o.url]);
 
   if (newRows.length === 0) { console.log("📋  Rien de nouveau (déjà présents)."); return; }

@@ -489,6 +489,12 @@ console.log(`\n  → FORT:${stats.strong}  BON:${stats.good}  AUTRES:${stats.oth
   const html = buildEmailHTML(toSend, stats);
   await sendEmail(html, stats);
   await pushToTracker(toSend);
+function extractOfferId(url) {
+  const m = url.match(/\/(?:details|land\/ad)\/(\d+)/);
+  return m ? m[1] : url;
+}
+
+
 
 async function pushToTracker(offers) {
   const { GOOGLE_SERVICE_ACCOUNT_KEY, TRACKER_SHEET_ID, SUGGESTIONS_SHEET_TAB } = process.env;
@@ -510,11 +516,11 @@ async function pushToTracker(offers) {
   const existingRows = existing.data.values || [];
 
   const seen = new Set(
-    existingRows.map((r) => `${(r[0] || "").trim()}|${(r[2] || "").trim()}`)
+    existingRows.map((r) => extractOfferId((r[6] || "").trim()))
   );
 
   const newRows = offers
-    .filter((o) => !seen.has(`${o.company}|${o.title}`))
+    .filter((o) => !seen.has(extractOfferId(o.url)))
     .map((o) => [
       o.company,
       o.score,
