@@ -1,4 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+function stripHtml(html) {
+  let prev, text = html;
+  do {
+    prev = text;
+    text = text.replace(/<[^>]*>/g, "");
+  } while (text !== prev);
+  return text;
+}
 import { google } from "googleapis";
 import { readFileSync, existsSync } from "fs";
 
@@ -43,7 +51,7 @@ async function fetchAdzuna(country, keyword) {
           location: (o.location?.display_name || country).trim(),
           country,
           url: o.redirect_url || "",
-          snippet: (o.description || "").replace(/<[^>]+>/g, "").slice(0, 400),
+          snippet: stripHtml(o.description || "").slice(0, 400),
         });
       }
     } catch (e) { console.warn(`  ⚠️  ${country} "${keyword}" : ${e.message}`); }
@@ -92,6 +100,19 @@ function extractOfferId(url) {
   return m ? m[1] : url;
 }
 
+async function ensureSheetHasRows(sheets, spreadsheetId, tabName, neededRows) {
+  const meta = await sheets.spreadsheets.get({ spreadsheetId });
+  const sheet = meta.data.sheets.find((s) => s.properties.title === tabName);
+  if (!sheet) return;
+  const currentRows = sheet.properties.gridProperties.rowCount;
+  if (neededRows > currentRows) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: { requests: [{ updateSheetProperties: { properties: { sheetId: sheet.properties.sheetId, gridProperties: { rowCount: neededRows + 1000 } }, fields: "gridProperties.rowCount" } }] },
+    });
+    console.log(`  📐  Grille agrandie à ${neededRows + 1000} lignes.`);
+  }
+}
 
 async function pushToSheet(offers, tab) {
   if (!GOOGLE_SERVICE_ACCOUNT_KEY || !TRACKER_SHEET_ID) return;
@@ -147,6 +168,7 @@ async function pushToSheet(offers, tab) {
   if (remaining.length > 0) {
     const startRow = lastUsedIndex + 2 + 1; // +2 (offset Sheet), +1 (ligne suivante)
     const endRow = startRow + remaining.length - 1;
+    await ensureSheetHasRows(sheets, TRACKER_SHEET_ID, tab, endRow);
     await sheets.spreadsheets.values.update({
       spreadsheetId: TRACKER_SHEET_ID,
       range: `${tab}!A${startRow}:G${endRow}`,
@@ -175,7 +197,7 @@ async function main() {
 
   console.log("🎯  Scoring...");
   const scored = await scoreAndFilter(allOffers);
-  const relevant = scored.filter((o) => o.score >= 50);
+  const relevant = scored.filter((o) => o.score >= 70);
   console.log(`  → ${relevant.length}/${scored.length} pertinentes\n`);
 
   await pushToSheet(relevant, SUGGESTIONS_INTL_TAB);

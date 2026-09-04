@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+function stripHtml(html) {
+  let prev, text = html;
+  do {
+    prev = text;
+    text = text.replace(/<[^>]*>/g, "");
+  } while (text !== prev);
+  return text;
+}
 /**
  * ╔══════════════════════════════════════════════════════════╗
  * ║  VEILLE EMPLOI CYBER — Automatisation Quotidienne        ║
@@ -178,7 +186,7 @@ async function searchAdzuna() {
           company: (o.company?.display_name || "Non précisé").trim(),
           location:(o.location?.display_name || "IDF").trim(),
           url:     o.redirect_url || "",
-          snippet: (o.description || "").replace(/<[^>]+>/g, "").slice(0, 300),
+          snippet: stripHtml(o.description || "").slice(0, 300),
           date:    o.created?.slice(0, 10) || today,
           source:  "Adzuna",
           score: 0, pros: [], cons: [],
@@ -475,7 +483,7 @@ console.log(`\n  → FORT:${stats.strong}  BON:${stats.good}  AUTRES:${stats.oth
   saveSeenIds([...Array.from(seenIds).map((id) => ({ id })), ...scored]);
 
   // 4. Filtrer avant envoi : seulement les offres au-dessus du seuil
-  const SCORE_THRESHOLD = 40;
+  const SCORE_THRESHOLD = 70;
   const toSend = scored.filter((o) => o.score >= SCORE_THRESHOLD);
   console.log(`  → ${toSend.length}/${scored.length} offre(s) au-dessus du seuil ${SCORE_THRESHOLD} (envoyée(s))\n`);
 
@@ -495,6 +503,19 @@ function extractOfferId(url) {
 }
 
 
+async function ensureSheetHasRows(sheets, spreadsheetId, tabName, neededRows) {
+  const meta = await sheets.spreadsheets.get({ spreadsheetId });
+  const sheet = meta.data.sheets.find((s) => s.properties.title === tabName);
+  if (!sheet) return;
+  const currentRows = sheet.properties.gridProperties.rowCount;
+  if (neededRows > currentRows) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: { requests: [{ updateSheetProperties: { properties: { sheetId: sheet.properties.sheetId, gridProperties: { rowCount: neededRows + 1000 } }, fields: "gridProperties.rowCount" } }] },
+    });
+    console.log(`  📐  Grille agrandie à ${neededRows + 1000} lignes.`);
+  }
+}
 
 async function pushToTracker(offers) {
   const { GOOGLE_SERVICE_ACCOUNT_KEY, TRACKER_SHEET_ID, SUGGESTIONS_SHEET_TAB } = process.env;

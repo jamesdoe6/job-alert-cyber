@@ -1,4 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+function stripHtml(html) {
+  let prev, text = html;
+  do {
+    prev = text;
+    text = text.replace(/<[^>]*>/g, "");
+  } while (text !== prev);
+  return text;
+}
 import { google } from "googleapis";
 import { readFileSync, existsSync } from "fs";
 
@@ -45,7 +53,7 @@ async function fetchAdzunaGraduate(country) {
           location: (o.location?.display_name || country).trim(),
           country,
           url: o.redirect_url || "",
-          snippet: (o.description || "").replace(/<[^>]+>/g, "").slice(0, 400),
+          snippet: stripHtml(o.description || "").slice(0, 400),
         });
       }
     } catch (e) { console.warn(`  ⚠️  ${country} : ${e.message}`); }
@@ -76,7 +84,7 @@ async function scoreAndFilter(offers) {
       if (scoresArray?.length) {
         scoresArray.forEach((s, idx) => {
           if (!batch[idx]) return;
-          if (s.is_it_cyber) results.push({ ...batch[idx], score: Number(s.score) || 0 });
+          if (s.is_it_cyber && Number(s.score) >= 70) results.push({ ...batch[idx], score: Number(s.score) || 0 });
         });
       }
     } catch (e) { console.warn(`  ⚠️  ${e.message}`); }
@@ -89,6 +97,19 @@ function extractOfferId(url) {
   return m ? m[1] : url;
 }
 
+async function ensureSheetHasRows(sheets, spreadsheetId, tabName, neededRows) {
+  const meta = await sheets.spreadsheets.get({ spreadsheetId });
+  const sheet = meta.data.sheets.find((s) => s.properties.title === tabName);
+  if (!sheet) return;
+  const currentRows = sheet.properties.gridProperties.rowCount;
+  if (neededRows > currentRows) {
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      requestBody: { requests: [{ updateSheetProperties: { properties: { sheetId: sheet.properties.sheetId, gridProperties: { rowCount: neededRows + 1000 } }, fields: "gridProperties.rowCount" } }] },
+    });
+    console.log(`  📐  Grille agrandie à ${neededRows + 1000} lignes.`);
+  }
+}
 
 async function pushToSheet(offers) {
   if (!GOOGLE_SERVICE_ACCOUNT_KEY || !TRACKER_SHEET_ID || offers.length === 0) {
@@ -131,6 +152,7 @@ async function pushToSheet(offers) {
   if (remaining.length > 0) {
     const startRow = lastUsedIndex + 2 + 1;
     const endRow = startRow + remaining.length - 1;
+    await ensureSheetHasRows(sheets, TRACKER_SHEET_ID, GRAD_SHEET_TAB, endRow);
     await sheets.spreadsheets.values.update({
       spreadsheetId: TRACKER_SHEET_ID, range: `${GRAD_SHEET_TAB}!A${startRow}:G${endRow}`,
       valueInputOption: "USER_ENTERED", requestBody: { values: remaining },
