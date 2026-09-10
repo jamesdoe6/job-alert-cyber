@@ -1,5 +1,8 @@
 import * as cheerio from "cheerio";
 import puppeteer from "puppeteer-extra";
+function isSenior(title) {
+  return /senior|confirmé|expert|lead\b/i.test(title);
+}
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 puppeteer.use(StealthPlugin());
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -63,7 +66,7 @@ async function fetchTokyoDev() {
     });
   });
 
-  return offers;
+  return offers.filter((o) => !isSenior(o.title));
 }
 
 async function scoreAndFilter(offers) {
@@ -73,6 +76,7 @@ async function scoreAndFilter(offers) {
     const items = batch.map((o, idx) => "OFFRE " + (idx + 1) + ": " + o.title + " | Tags: " + o.tags).join("\n");
     const prompt = "Profil :\n" + PROFILE + "\n\n" +
       "Evalue ces offres au Japon. Rejette DevOps, Data/Data Analytics, vente/pre-vente, support client local, conformite japonaise pure.\n" +
+      "Rejette aussi toute offre exigeant plus de 4 ans d'experience ou mentionnant 'senior' dans le titre ou la description.\n" +
       'Retourne UNIQUEMENT : {"scores":[{"score":75,"pros":["..."],"cons":["..."]}]}\n\n' + items;
     try {
       const result = await scoringModel.generateContent(prompt);

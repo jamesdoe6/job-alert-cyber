@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 function stripHtml(html) {
+function isSenior(title) {
+  return /senior|confirmé|expert|lead\b/i.test(title);
+}
   let prev, text = html;
   do {
     prev = text;
@@ -228,6 +231,7 @@ Candidat : James Marville, Ingénieur SecOps, 2 ans BNP Paribas Arval, dispo oct
 Stack : Splunk, HarfangLab, CyberArk, Check Point, Fortinet, Active Directory, Python, Bash, Linux, SIEM, EDR, PAM
 Rôles visés : ingénieur cybersécurité, réseaux, systèmes, consultant sécurité, SOC analyst, IAM, GRC
 Zone : Île-de-France ou remote. Français natif, anglais B1.
+EXCLUSION STRICTE : si l'offre exige plus de 4 ans d'expérience OU mentionne "senior" dans le titre/description, attribue systématiquement un score de 0, quel que soit le reste du barème.
 BARÈME /100 :
 +30 rôle cyber/SOC/réseau/systèmes/consultant
 +25 stack technique (Splunk, CyberArk, SIEM, EDR, AD…)
@@ -460,9 +464,10 @@ async function main() {
 
   const deduped   = deduplicate(allRaw);
   const newOffers = filterNew(deduped, seenIds);
-  console.log(`  → ${deduped.length} après dédup · ${newOffers.length} nouvelles\n`);
+  const newOffersFiltered = newOffers.filter((o) => !isSenior(o.title));
+  console.log(`  → ${deduped.length} après dédup · ${newOffersFiltered.length} nouvelles (dont senior exclues)\n`);
 
-  if (newOffers.length === 0) {
+  if (newOffersFiltered.length === 0) {
     console.log("ℹ️   Aucune nouvelle offre. Email non envoyé.");
     console.log(`⏱️   Durée : ${((Date.now() - t0) / 1000).toFixed(1)}s\n`);
     return;
@@ -470,7 +475,7 @@ async function main() {
 
   // 2. Scoring
   console.log("🎯  Scoring Gemini en cours...");
-  const scored = await scoreOffers(newOffers);
+  const scored = await scoreOffers(newOffersFiltered);
   const stats = {
     total:  scored.length,
     strong: scored.filter((o) => o.score >= 75).length,

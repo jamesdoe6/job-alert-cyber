@@ -20,7 +20,10 @@ if (existsSync(".env")) {
 const { ADZUNA_APP_ID, ADZUNA_APP_KEY, GEMINI_API_KEY, GOOGLE_SERVICE_ACCOUNT_KEY, TRACKER_SHEET_ID } = process.env;
 const SUGGESTIONS_INTL_TAB = process.env.SUGGESTIONS_INTL_TAB || "Suggestions-Intl";
 
-const COUNTRIES = ["fr", "ch", "sg"];
+function isSenior(title) {
+  return /senior|confirmé|expert|lead\b/i.test(title);
+}
+const COUNTRIES = ["fr", "ch"];
 const KEYWORDS = ["cybersecurity graduate programme", "cybersecurity", "IT security", "SOC analyst"];
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -70,8 +73,10 @@ async function scoreAndFilter(offers) {
 
     const prompt = `Profil candidat :\n${PROFILE}\n\n` +
       `Évalue ces ${batch.length} offres. Pour chacune, détermine si c'est un vrai match :\n` +
+      `- LOCALISATION STRICTE : n'accepte QUE Martinique, Polynésie française, Nouvelle-Calédonie, Wallis-et-Futuna, Genève, ou Suisse (uniquement si l'offre est clairement en français). Rejette toute autre localisation, y compris la France métropolitaine hors DOM-TOM listés et la Suisse alémanique/italophone.\n` +
       `- Accepte les Graduate Programmes/Schemes cyber ou IT-avec-rotation-cyber\n` +
       `- Accepte les postes cyber classiques correspondant au profil\n` +
+      `- EXPÉRIENCE : rejette toute offre exigeant plus de 4 ans d'expérience ou mentionnant "senior" dans le titre ou la description\n` +
       `- Rejette : stage/alternance classique non labellisé "Graduate Programme", postes sans rapport avec la cybersécurité\n` +
       `Retourne UNIQUEMENT ce JSON : {"scores":[{"score":75,"is_graduate":true,"pros":["..."],"cons":["..."]}]}\n\n${items}`;
 
@@ -193,6 +198,7 @@ async function main() {
   const uniqueMap = new Map();
   for (const o of allOffers) uniqueMap.set(`${o.company}|${o.title}`, o);
   allOffers = [...uniqueMap.values()];
+  allOffers = allOffers.filter((o) => !isSenior(o.title));
   console.log(`  → ${allOffers.length} offres uniques\n`);
 
   console.log("🎯  Scoring...");

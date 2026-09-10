@@ -22,6 +22,9 @@ const GRAD_SHEET_TAB = process.env.GRAD_SHEET_TAB || "Graduate-Programmes";
 
 // Tous les pays couverts par Adzuna — élargi au-delà de ta liste initiale
 // pour maximiser les chances de trouver de vrais Graduate Programmes
+function isSenior(title) {
+  return /senior|confirmé|expert|lead\b/i.test(title);
+}
 const COUNTRIES = ["gb", "fr", "sg"];
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -71,6 +74,7 @@ async function scoreAndFilter(offers) {
     ).join("\n");
     const prompt = `Profil :\n${PROFILE}\n\n` +
       `Évalue si ces "Graduate Programme" sont en IT/cybersécurité (accepte IT généraliste avec rotation cyber, rejette Finance/Marketing/RH/Ventes purs).\n` +
+      `Rejette aussi toute offre exigeant plus de 4 ans d'expérience ou mentionnant "senior" dans le titre ou la description.\n` +
       `Retourne UNIQUEMENT : {"scores":[{"score":75,"is_it_cyber":true,"pros":["..."],"cons":["..."]}]}\n\n${items}`;
     try {
       const result = await scoringModel.generateContent(prompt);
@@ -172,6 +176,7 @@ async function main() {
   const uniqueMap = new Map();
   for (const o of allOffers) uniqueMap.set(`${o.company}|${o.title}`, o);
   allOffers = [...uniqueMap.values()];
+  allOffers = allOffers.filter((o) => !isSenior(o.title));
   console.log(`  → ${allOffers.length} offres uniques\n`);
 
   console.log("🎯  Scoring (filtre IT/cyber)...");
