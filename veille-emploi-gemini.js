@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-function stripHtml(html) {
 function isSenior(title) {
   return /senior|confirmé|expert|lead\b/i.test(title);
 }
+function stripHtml(html) {
   let prev, text = html;
   do {
     prev = text;
