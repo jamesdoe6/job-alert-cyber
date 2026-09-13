@@ -3,6 +3,29 @@ import puppeteer from "puppeteer-extra";
 function isSenior(title) {
   return /senior|confirmé|expert|lead\b/i.test(title);
 }
+
+function parseDateForSort(val) {
+  if (!val) return 0;
+  const s = String(val);
+  const parts = s.split("/");
+  if (parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+  const d = new Date(s);
+  return isNaN(d) ? 0 : d.getTime();
+}
+
+async function sortByDateDesc(sheets, spreadsheetId, tabName) {
+  const res = await sheets.spreadsheets.values.get({ spreadsheetId, range: `${tabName}!A2:G5000` });
+  const rows = res.data.values || [];
+  const nonEmpty = rows.filter((r) => r && r.some((c) => c && c.toString().trim() !== ""));
+  if (nonEmpty.length === 0) return;
+  nonEmpty.sort((a, b) => parseDateForSort(b[3]) - parseDateForSort(a[3]));
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: `${tabName}!A2:G${1 + nonEmpty.length}`,
+    valueInputOption: "USER_ENTERED",
+    requestBody: { values: nonEmpty },
+  });
+}
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 puppeteer.use(StealthPlugin());
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -159,6 +182,11 @@ async function main() {
   const scored = await scoreAndFilter(offers);
   const relevant = scored.filter((o) => o.score >= 50);
   await pushToSheet(relevant);
+
+  const auth2 = new google.auth.GoogleAuth({ keyFile: GOOGLE_SERVICE_ACCOUNT_KEY, scopes: ["https://www.googleapis.com/auth/spreadsheets"] });
+  const sheets2 = google.sheets({ version: "v4", auth: auth2 });
+  await sortByDateDesc(sheets2, TRACKER_SHEET_ID, SUGGESTIONS_INTL_TAB);
+
   await notifyTelegram(`✅ Veille Japon (TokyoDev) terminée : ${relevant.length} offres pertinentes trouvées.`);
 }
 
