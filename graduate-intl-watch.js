@@ -23,14 +23,21 @@ const SUGGESTIONS_INTL_TAB = process.env.SUGGESTIONS_INTL_TAB || "Suggestions-In
 function isSenior(title) {
   return /senior|confirmé|expert|lead\b/i.test(title);
 }
+function formatDateFR() {
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = d.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+
 
 function parseDateForSort(val) {
   if (!val) return 0;
   const s = String(val);
   const parts = s.split("/");
-  if (parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
-  const d = new Date(s);
-  return isNaN(d) ? 0 : d.getTime();
+  if (parts.length === 3) return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])).getTime();
+  return 0;
 }
 
 async function sortByDateDesc(sheets, spreadsheetId, tabName) {
@@ -97,7 +104,7 @@ async function scoreAndFilter(offers) {
 
     const prompt = `Profil candidat :\n${PROFILE}\n\n` +
       `Évalue ces ${batch.length} offres. Pour chacune, détermine si c'est un vrai match :\n` +
-      `- LOCALISATION STRICTE : n'accepte QUE Martinique, Polynésie française, Nouvelle-Calédonie, Wallis-et-Futuna, Genève, ou Suisse (uniquement si l'offre est clairement en français). Rejette toute autre localisation, y compris la France métropolitaine hors DOM-TOM listés et la Suisse alémanique/italophone.\n` +
+      `- LOCALISATION STRICTE : n'accepte QUE Martinique, Suisse, ou Norvège. Rejette toute autre localisation, y compris la France métropolitaine.\n` +
       `- Accepte les Graduate Programmes/Schemes cyber ou IT-avec-rotation-cyber\n` +
       `- Accepte les postes cyber classiques correspondant au profil\n` +
       `- EXPÉRIENCE : rejette toute offre exigeant plus de 4 ans d'expérience ou mentionnant "senior" dans le titre ou la description\n` +
@@ -161,7 +168,7 @@ async function pushToSheet(offers, tab) {
 
   const newRows = offers
     .filter((o) => !seen.has(extractOfferId(o.url)))
-    .map((o) => [o.company, o.score, o.title, new Date().toISOString().slice(0, 10), "à trier", `${o.location} (${o.country.toUpperCase()})`, o.url]);  if (newRows.length === 0) {
+    .map((o) => [o.company, o.score, o.title, formatDateFR(), "à trier", `${o.location} (${o.country.toUpperCase()})`, o.url]);  if (newRows.length === 0) {
     console.log(`📋  ${tab} : rien de nouveau.`);
     return;
   }

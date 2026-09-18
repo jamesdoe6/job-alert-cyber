@@ -25,14 +25,21 @@ const GRAD_SHEET_TAB = process.env.GRAD_SHEET_TAB || "Graduate-Programmes";
 function isSenior(title) {
   return /senior|confirmé|expert|lead\b/i.test(title);
 }
+function formatDateFR() {
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = d.getFullYear();
+  return `${dd}/${mm}/${yyyy}`;
+}
+
 
 function parseDateForSort(val) {
   if (!val) return 0;
   const s = String(val);
   const parts = s.split("/");
-  if (parts.length === 3) return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
-  const d = new Date(s);
-  return isNaN(d) ? 0 : d.getTime();
+  if (parts.length === 3) return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0])).getTime();
+  return 0;
 }
 
 async function sortByDateDesc(sheets, spreadsheetId, tabName) {
@@ -153,7 +160,7 @@ async function pushToSheet(offers) {
 
   const newRows = offers
     .filter((o) => !seen.has(extractOfferId(o.url)))
-    .map((o) => [o.company, o.score, o.title, new Date().toISOString().slice(0, 10), "à trier", o.location, o.url]);
+    .map((o) => [o.company, o.score, o.title, formatDateFR(), "à trier", o.location, o.url]);
 
   if (newRows.length === 0) { console.log("📋  Rien de nouveau (déjà présents)."); return; }
 
