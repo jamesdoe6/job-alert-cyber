@@ -219,7 +219,17 @@ async function main() {
   const auth2 = new google.auth.GoogleAuth({ keyFile: GOOGLE_SERVICE_ACCOUNT_KEY, scopes: ["https://www.googleapis.com/auth/spreadsheets"] });
   const sheets2 = google.sheets({ version: "v4", auth: auth2 });
   await sortByDateDesc(sheets2, TRACKER_SHEET_ID, GRAD_SHEET_TAB);
-  await notifyTelegram(`✅ Veille Graduate Programmes (GB/FR/SG) terminée : ${scored.length} programmes trouvés.`);
+  const byCountry = {};
+  for (const o of scored) {
+    const c = (o.country || "?").toUpperCase();
+    byCountry[c] = (byCountry[c] || 0) + 1;
+  }
+  const repartition = Object.entries(byCountry).map(([c, n]) => `${c} : ${n}`).join(" · ");
+  await notifyTelegram(
+    `✅ Veille Graduate Programmes\n` +
+    `📊 ${scored.length} nouveau(x) programme(s)\n` +
+    `📍 ${repartition || "aucun"}`
+  );
 }
 
 async function notifyTelegram(message) {

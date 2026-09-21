@@ -104,7 +104,8 @@ async function scoreAndFilter(offers) {
 
     const prompt = `Profil candidat :\n${PROFILE}\n\n` +
       `Évalue ces ${batch.length} offres. Pour chacune, détermine si c'est un vrai match :\n` +
-      `- LOCALISATION STRICTE : n'accepte QUE Martinique, Suisse, ou Norvège. Rejette toute autre localisation, y compris la France métropolitaine.\n` +
+      `- LOCALISATION STRICTE : n'accepte QUE la Martinique. Rejette toute autre localisation, y compris la France métropolitaine, la Suisse, et la Norvège.\n` +
+      `- COMPÉTENCES : les postes doivent être dans le domaine de la cybersécurité ou de l'IT.\n` +
       `- Accepte les Graduate Programmes/Schemes cyber ou IT-avec-rotation-cyber\n` +
       `- Accepte les postes cyber classiques correspondant au profil\n` +
       `- EXPÉRIENCE : rejette toute offre exigeant plus de 4 ans d'expérience ou mentionnant "senior" dans le titre ou la description\n` +
@@ -239,7 +240,12 @@ async function main() {
   console.log(`  → ${relevant.length}/${scored.length} pertinentes\n`);
 
   await pushToSheet(relevant, SUGGESTIONS_INTL_TAB);
-  await notifyTelegram(`✅ Veille Intl (FR/CH/SG) terminée : ${relevant.length} offres pertinentes trouvées.`);
+  const martiniqueCount = relevant.filter((o) => /martinique/i.test(o.location)).length;
+  await notifyTelegram(
+    `✅ Veille Martinique\n` +
+    `📊 ${relevant.length} nouvelle(s) offre(s)\n` +
+    `📍 Martinique : ${martiniqueCount}`
+  );
 }
 
 async function notifyTelegram(message) {
